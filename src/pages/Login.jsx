@@ -10,6 +10,17 @@ class Login extends React.Component {
     isDisabled: true,
   };
 
+  checkToDisableButton = () => {
+    const { email, password } = this.state;
+    const minLength = 6;
+    const validPassword = password.length >= minLength;
+    const validEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
+    const disableButton = !(validPassword && validEmail);
+    this.setState({
+      isDisabled: disableButton,
+    });
+  };
+
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({
@@ -21,21 +32,8 @@ class Login extends React.Component {
     event.preventDefault();
     const { history, dispatch } = this.props;
     const { email } = this.state;
-    dispatch(addUser({
-      email,
-    }));
+    dispatch(addUser(email));
     history.push('/carteira');
-  };
-
-  checkToDisableButton = () => {
-    const { email, password } = this.state;
-    const minLength = 6;
-    const validPassword = password.length >= minLength;
-    const validEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
-    const disableButton = !(validPassword && validEmail);
-    this.setState({
-      isDisabled: disableButton,
-    });
   };
 
   render() {
