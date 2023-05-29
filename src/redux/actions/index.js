@@ -1,7 +1,8 @@
 export const ADD_USER = 'ADD_USER';
-export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
+export const REQUEST_CURRENCIES_SUCCESS = 'REQUEST_CURRENCIES_SUCCESS';
 export const REQUEST_API = 'REQUEST_API';
 export const REQUEST_ERROR = 'REQUEST_ERROR';
+export const REQUEST_EXPENSES_SUCCESS = 'REQUEST_EXPENSES_SUCCESS';
 
 // ..........actions...........
 
@@ -14,8 +15,8 @@ const requestApi = () => ({
   type: REQUEST_API,
 });
 
-const requestSuccess = (payload) => ({
-  type: REQUEST_SUCCESS,
+const requestCurrenciesSuccess = (payload) => ({
+  type: REQUEST_CURRENCIES_SUCCESS,
   payload,
 });
 
@@ -29,8 +30,26 @@ export const getCurrenciesApi = () => async (dispatch) => {
     dispatch(requestApi());
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const data = await response.json();
-    const moedas = Object.keys(data).filter((moeda) => moeda !== 'USDT');
-    dispatch(requestSuccess(moedas));
+    const moedas = Object.keys(await data).filter((moeda) => moeda !== 'USDT');
+    dispatch(requestCurrenciesSuccess(moedas));
+  } catch (error) {
+    dispatch(requestError());
+  }
+};
+
+const requestExpensesSuccess = (payload) => ({
+  type: REQUEST_EXPENSES_SUCCESS,
+  payload,
+});
+
+export const getExpensesApi = (expenses) => async (dispatch) => {
+  dispatch(requestApi());
+  try {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const data = await response.json();
+    expenses.exchangeRates = await data;
+
+    dispatch(requestExpensesSuccess(expenses));
   } catch (error) {
     dispatch(requestError());
   }

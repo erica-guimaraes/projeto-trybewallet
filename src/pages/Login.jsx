@@ -41,15 +41,19 @@ class Login extends React.Component {
     return (
       <form>
         <h1>Login</h1>
+        <label htmlFor="email">Email:</label>
         <input
           type="email"
           data-testid="email-input"
+          id="email"
           name="email"
           onChange={ this.handleChange }
         />
+        <label htmlFor="password">Senha:</label>
         <input
           type="password"
           data-testid="password-input"
+          id="password"
           name="password"
           onChange={ this.handleChange }
         />
