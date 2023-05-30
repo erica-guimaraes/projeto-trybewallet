@@ -1,5 +1,8 @@
 import { REQUEST_CURRENCIES_SUCCESS,
-  REQUEST_API, REQUEST_ERROR, REQUEST_EXPENSES_SUCCESS } from '../actions';
+  REQUEST_API,
+  REQUEST_ERROR,
+  REQUEST_EXPENSES_SUCCESS,
+  REQUEST_DELETE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [], // array de string
@@ -33,6 +36,13 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: [...state.expenses, action.payload],
       idToEdit: state.idToEdit + 1,
+      loading: false,
+    };
+  case REQUEST_DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter(({ id }) => id !== action.idExpense),
+      totalExpense: Math.abs(state.totalExpense - action.valueExpense),
       loading: false,
     };
   default:

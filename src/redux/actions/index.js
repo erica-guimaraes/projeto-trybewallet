@@ -3,6 +3,7 @@ export const REQUEST_CURRENCIES_SUCCESS = 'REQUEST_CURRENCIES_SUCCESS';
 export const REQUEST_API = 'REQUEST_API';
 export const REQUEST_ERROR = 'REQUEST_ERROR';
 export const REQUEST_EXPENSES_SUCCESS = 'REQUEST_EXPENSES_SUCCESS';
+export const REQUEST_DELETE_EXPENSE = 'REQUEST_DELETE_EXPENSE';
 
 // ..........actions...........
 
@@ -26,8 +27,8 @@ const requestError = (error) => ({
 });
 
 export const getCurrenciesApi = () => async (dispatch) => {
+  dispatch(requestApi());
   try {
-    dispatch(requestApi());
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const data = await response.json();
     const moedas = Object.keys(await data).filter((moeda) => moeda !== 'USDT');
@@ -54,3 +55,9 @@ export const getExpensesApi = (expenses) => async (dispatch) => {
     dispatch(requestError());
   }
 };
+
+export const requestDeleteExpense = (idExpense, valueExpense) => ({
+  type: REQUEST_DELETE_EXPENSE,
+  idExpense,
+  valueExpense,
+});
