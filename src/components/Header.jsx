@@ -3,11 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Header extends Component {
-  componentDidMount() {
-    const { expenses } = this.props;
-    console.log(expenses);
-  }
-
   render() {
     const { email, expenses } = this.props;
     return (
