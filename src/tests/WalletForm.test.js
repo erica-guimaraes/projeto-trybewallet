@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
 import mockData from './helpers/mockData';
+import WalletForm from '../components/WalletForm';
 
 describe('Testando o componente WalletForm', () => {
   it('Verifica se existe um formulário para adicionar uma despesa', () => {
@@ -28,7 +29,7 @@ describe('Testando o componente WalletForm', () => {
     expect(category).toBeInTheDocument();
     expect(button).toBeInTheDocument();
   });
-  it('Verifica se existe no formulário os códigos de moédas e se ocorreu alguma chamada a função fetch', () => {
+  it('Verifica se existe no formulário a relação das moedas e se ocorreu alguma chamada à função fetch', () => {
     const currenciesArray = Object.values(mockData)
       .map((elemento) => elemento.code);
     const loginStep = () => {
